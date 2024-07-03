@@ -14,7 +14,7 @@ class NoteController extends Controller
     {
         
         
-        return view('note.index');
+        return view('home.index');
     }
 
     /**

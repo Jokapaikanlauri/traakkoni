@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="note-container py-12" >
-        <a href="{{route('note.create')}}" class="new-note-btn">
+        <a href="{{route('home.create')}}" class="new-note-btn">
             New Note
         </a>
         <div class="notes">

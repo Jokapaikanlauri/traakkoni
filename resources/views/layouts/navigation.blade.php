@@ -12,7 +12,7 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('note.index')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('home.index')" :active="request()->routeIs('dashboard')">
                         {{ __('Notes') }}
                     </x-nav-link>
                 </div>
@@ -67,7 +67,7 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('note.index')" :active="request()->routeIs('note.index')">
+            <x-responsive-nav-link :href="route('home.index')" :active="request()->routeIs('home.index')">
                 {{ __('Notes') }}
             </x-responsive-nav-link>
         </div>

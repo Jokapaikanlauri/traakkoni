@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NoteController;
 
-Route::redirect("/","/note")->name("dashboard");
+Route::redirect("/","/home")->name("dashboard");
 
 Route::middleware(["auth","verified"])->group(function () {
 
@@ -18,7 +18,7 @@ Route::get('/note/{id}/edit', [NoteController::class,'edit'])->name('note.edit')
 Route::put('/note/{id}', [NoteController::class,'update'])->name('note.update');
 Route::delete('/note/{id}', [NoteController::class,'delete'])->name('note.destroy');
 */
-Route::resource('note', NoteController::class);
+Route::resource('home', NoteController::class);
 });
 
 Route::middleware('auth')->group(function () {
