@@ -4,6 +4,12 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NoteController;
 
+
+use App\Http\Controllers\RoutePlannerController;
+
+Route::get('/route-planner', [RoutePlannerController::class, 'show']);
+Route::post('/save-route', [RoutePlannerController::class, 'saveRoute']);
+
 Route::redirect("/","/home")->name("dashboard");
 
 Route::middleware(["auth","verified"])->group(function () {
