@@ -3,24 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Route;
 
-class RoutePlannerController extends Controller
+class RouteController extends Controller
 {
-    public function show()
-    {
-        return view('route-planner');
-    }
-
     public function saveRoute(Request $request)
     {
-        $data = $request->validate([
-            'start' => 'required|string',
-            'end' => 'required|string',
-            'waypoints' => 'required|array'
-        ]);
-
-        // Process the waypoints as needed (e.g., save to database)
-        // ...
+        $route = new Route;
+        $route->start = $request->start;
+        $route->end = $request->end;
+        $route->waypoints = json_encode($request->waypoints);
+        $route->distance = $request->distance;
+        $route->elevation_gain = $request->elevation_gain;
+        $route->save();
 
         return response()->json(['status' => 'success']);
     }

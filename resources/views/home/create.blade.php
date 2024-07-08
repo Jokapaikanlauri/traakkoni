@@ -1,45 +1,55 @@
+<php?>
 <html>
+
 <head>
     <title>Multi-Waypoint Route Planner</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCq-kOTVIXT9u1_YXEsDbEBCIW3FQwYPZ4&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCq-kOTVIXT9u1_YXEsDbEBCIW3FQwYPZ4&libraries=places">
+    </script>
     <style>
         #map {
             height: 90%;
             width: 100%;
         }
+
         #controls {
             display: flex;
             justify-content: center;
             align-items: center;
         }
+
         #info {
             padding: 20px;
             text-align: center;
         }
     </style>
 </head>
+
 <body>
-    <h1>Multi-Waypoint Route Planner</h1>
+    <h1>Plan your route</h1>
     <div id="controls">
         <button id="button" onclick="calculateRoute()">Calculate Route</button>
         <button id="button" onclick="saveRoute()">Save Route</button>
     </div>
     <div id="elevation"></div>
+    <div id="distance"></div>
     <div id="map"></div>
     <script>
         let map;
         let directionsService;
         let directionsRenderer;
         let waypoints = [];
-        let h=0;
+        let h = 0;
         let end;
         let start;
 
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: -34.397, lng: 150.644},
-                zoom: 8
+                center: {
+                    lat: 60.192059,
+                    lng: 24.945831
+                },
+                zoom: 11
             });
             directionsService = new google.maps.DirectionsService();
             directionsRenderer = new google.maps.DirectionsRenderer();
@@ -65,11 +75,17 @@
             });
             h++;
         }
+
         function calculateRoute() {
+            if (!start || !end) {
+                alert('Please select start and end points for the route.');
+                return;
+            }
+
             const request = {
                 origin: start,
                 destination: end,
-                waypoints: waypoints,
+                waypoints: waypoints.slice(0, -1),
                 optimizeWaypoints: true,
                 travelMode: 'WALKING'
             };
@@ -84,7 +100,7 @@
             });
         }
 
-         function displayRouteInfo(result) {
+        function displayRouteInfo(result) {
             const route = result.routes[0];
             let totalDistance = 0;
             let elevationService = new google.maps.ElevationService();
@@ -92,10 +108,9 @@
 
             route.legs.forEach(leg => {
                 totalDistance += leg.distance.value;
-                let path = leg.steps.map(step => {
-                    return step.start_location;
-                });
+                let path = leg.steps.map(step => step.start_location);
                 path.push(leg.end_location);
+
                 elevationService.getElevationAlongPath({
                     path: path,
                     samples: 256
@@ -104,18 +119,23 @@
                         let prevElevation = elevations[0].elevation;
                         elevations.forEach(elevation => {
                             if (elevation.elevation > prevElevation) {
-                                elevationGain += (elevation.elevation - prevElevation);
+                                if (prevElevation > -450) {
+                                    elevationGain += (elevation.elevation - prevElevation);
+                                }
+
                             }
                             prevElevation = elevation.elevation;
                         });
 
-                        document.getElementById('elevation').innerText = 'Total Elevation Gain: ' + elevationGain.toFixed(2) + ' meters';
+                        document.getElementById('elevation').innerText = 'Total Elevation Gain: ' +
+                            elevationGain.toFixed(0) + ' meters';
                     }
                 });
             });
             document.getElementById('distance').innerText = 'Total Distance: ' + (totalDistance / 1000).toFixed(2) + ' km';
         }
-         function saveRoute() {
+
+        function saveRoute() {
             const waypointData = waypoints.map(point => ({
                 lat: point.location.lat(),
                 lng: point.location.lng()
@@ -128,24 +148,25 @@
             };
 
             fetch('/save-route', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: JSON.stringify(routeData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    alert('Route saved successfully!');
-                } else {
-                    alert('Failed to save route.');
-                }
-            });
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify(routeData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert('Route saved successfully!');
+                    } else {
+                        alert('Failed to save route.');
+                    }
+                });
         }
 
         window.onload = initMap;
     </script>
 </body>
+
 </html>
