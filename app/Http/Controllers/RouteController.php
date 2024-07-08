@@ -12,8 +12,6 @@ class RouteController extends Controller
      */
     public function index()
     {
-        
-        
         return view('home.index');
     }
 
@@ -30,13 +28,7 @@ class RouteController extends Controller
      */
     public function store(Request $request)
     {
-        $data=$request->validate(['route' => ['required','string']]);
-
-        $data['id'] = $request->user()->id;
-
-        $route = Route::create($data);
-
-        return to_route('route.show', $route)->with('message', 'Route was created');
+        //
     }
 
     /**
@@ -44,10 +36,7 @@ class RouteController extends Controller
      */
     public function show(Route $route)
     {
-        if($route->id != request()->users()->id){
-        abort(403);
-        }
-        return view('route.show', ['route'=>$route]) ;
+        return view('home.show');
     }
 
     /**
@@ -55,10 +44,7 @@ class RouteController extends Controller
      */
     public function edit(Route $route)
     {
-        if($route->user_id != request()->user()->id){
-            abort(403);
-            }
-        return view('route.edit', ['route'=>$route]) ;
+        //
     }
 
     /**
@@ -66,13 +52,7 @@ class RouteController extends Controller
      */
     public function update(Request $request, Route $route)
     {
-        $data=$request->validate(['route' => ['required','string']]);
-        if($route->user_id != request()->user()->id){
-            abort(403);
-            }
-        $route->update($data);
-
-        return to_route('route.show', $route)->with('message', 'Route was updated');
+        //
     }
 
     /**
@@ -80,11 +60,18 @@ class RouteController extends Controller
      */
     public function destroy(Route $route)
     {
-        if($route->user_id != request()->user()->id){
-            abort(403);
-            }
-        $route-> delete();
+        //
+    }
+    public function saveRoute(Request $request)
+    {
+        $route = new Route;
+        $route->start = $request->start;
+        $route->end = $request->end;
+        $route->waypoints = json_encode($request->waypoints);
+        $route->distance = $request->distance;
+        $route->elevation_gain = $request->elevation_gain;
+        $route->save();
 
-        return to_route('route.index')-> with('message', 'Route was deleted!');
+        return response()->json(['status' => 'success']);
     }
 }

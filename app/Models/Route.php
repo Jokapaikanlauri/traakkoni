@@ -11,10 +11,8 @@ class Route extends Model
 
     protected $fillable = [
         'name',
-        'start_lat',
-        'start_lng',
-        'end_lat',
-        'end_lng',
+        'start',
+        'end',
         'waypoints',
         'distance',
         'elevation_gain',
