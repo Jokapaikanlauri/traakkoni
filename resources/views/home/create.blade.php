@@ -1,6 +1,5 @@
 <php?>
     <html>
-
     <head>
         <title>Multi-Waypoint Route Planner</title>
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -66,6 +65,8 @@
             let h = 0;
             let end;
             let start;
+            let totalDistance = 0;
+            let elevationGain = 0;
 
             function initMap() {
                 map = new google.maps.Map(document.getElementById('map'), {
@@ -126,9 +127,9 @@
 
             function displayRouteInfo(result) {
                 const route = result.routes[0];
-                let totalDistance = 0;
+                
                 let elevationService = new google.maps.ElevationService();
-                let elevationGain = 0;
+                
 
                 route.legs.forEach(leg => {
                     totalDistance += leg.distance.value;
@@ -168,25 +169,27 @@
                 const routeData = {
                     start: start,
                     end: end,
-                    waypoints: waypointData
+                    waypoints: waypointData,
+                    elevationGain: elevationGain,
+                    totalDistance: totalDistance
                 };
 
-                fetch('/save-route', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                        },
-                        body: JSON.stringify(routeData)
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.status === 'success') {
-                            alert('Route saved successfully!');
-                        } else {
-                            alert('Failed to save route.');
-                        }
-                    });
+                 fetch('/save-route', {
+                         method: 'POST',
+                         headers: {
+                             'Content-Type': 'application/json',
+                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                         },
+                         body: JSON.stringify(routeData)
+                     })
+                     .then(response => response.json())
+                     .then(data => {
+                         if (data.status === 'success') {
+                             alert('Route saved successfully!');
+                         } else {
+                             alert('Failed to save route.');
+                         }
+                     });
             }
 
             window.onload = initMap;

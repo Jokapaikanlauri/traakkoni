@@ -26,17 +26,25 @@ class RouteController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
+     public function store(Request $request)
+     {
+         $route = new Route;
+         $route->start = $request->start;
+         $route->end = $request->end;
+         $route->waypoints = json_encode($request->waypoints);
+         $route->distance = $request->distance;
+         $route->elevation_gain = $request->elevation_gain;
+         $route->save();
+         error_log("store funktio");
+         return to_route('home.index', $route)->with('message', 'Route was created');
+     }
 
     /**
      * Display the specified resource.
      */
     public function show(Route $route)
     {
-        return view('home.show');
+        return ('hello world!');
     }
 
     /**
@@ -54,7 +62,6 @@ class RouteController extends Controller
     {
         //
     }
-
     /**
      * Remove the specified resource from storage.
      */
@@ -64,14 +71,26 @@ class RouteController extends Controller
     }
     public function saveRoute(Request $request)
     {
-        $route = new Route;
-        $route->start = $request->start;
-        $route->end = $request->end;
-        $route->waypoints = json_encode($request->waypoints);
-        $route->distance = $request->distance;
-        $route->elevation_gain = $request->elevation_gain;
-        $route->save();
+        try {
+            $data = $request->all();
 
-        return response()->json(['status' => 'success']);
+            // Validate the incoming data
+            $validated = $request->validate([
+                'start.lat' => 'required|numeric',
+                'start.lng' => 'required|numeric',
+                'end.lat' => 'required|numeric',
+                'end.lng' => 'required|numeric',
+                'waypoints' => 'array',
+                'elevationGain' => 'required|numeric',
+                'totalDistance' => 'required|numeric'
+            ]);
+
+            // Save route logic (example: save to the database)
+            // Route::create($validated); // assuming you have a Route model and routes table
+
+            return response()->json(['status' => 'success']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
+        }
     }
 }

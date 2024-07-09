@@ -7,13 +7,11 @@ use App\Http\Controllers\RouteController;
 
 use App\Http\Controllers\RoutePlannerController;
 
-Route::get('/route-planner', [RouteController::class, 'show']);
-Route::post('/save-route', [RouteController::class, 'saveRoute']);
+
 
 Route::redirect("/","/home")->name("dashboard");
-
+Route::post('/save-route', [RouteController::class, 'saveRoute'])->name('saveRoute');
 Route::middleware(["auth","verified"])->group(function () {
-
 /*
 korvaa alla olevan koodin.
 Route::get('/note', [RouteController::class,'index'])->name('note.index');
