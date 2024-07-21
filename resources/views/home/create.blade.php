@@ -1,5 +1,6 @@
 <php?>
     <html>
+
     <head>
         <title>Multi-Waypoint Route Planner</title>
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -51,6 +52,7 @@
             <img class="block h-9 w-auto fill-current text-gray-800" src="/pictures/running.gif" />
         </a>
         <div id="controls">
+            <input type="text" id="routeName" placeholder="Name your route" />
             <button id="button" onclick="calculateRoute()">Calculate Route</button>
             <button id="button" onclick="saveRoute()">Save Route</button>
         </div>
@@ -127,9 +129,9 @@
 
             function displayRouteInfo(result) {
                 const route = result.routes[0];
-                
+
                 let elevationService = new google.maps.ElevationService();
-                
+
 
                 route.legs.forEach(leg => {
                     totalDistance += leg.distance.value;
@@ -161,35 +163,52 @@
             }
 
             function saveRoute() {
+                const routeName = document.getElementById('routeName').value;
+                if (!routeName) {
+                    alert('Please enter a route name.');
+                    return;
+                }
+
                 const waypointData = waypoints.map(point => ({
                     lat: point.location.lat(),
                     lng: point.location.lng()
                 }));
 
                 const routeData = {
-                    start: start,
-                    end: end,
+                    name: routeName,
+                    start: {
+                        lat: start.lat(),
+                        lng: start.lng()
+                    },
+                    end: {
+                        lat: end.lat(),
+                        lng: end.lng()
+                    },
                     waypoints: waypointData,
                     elevationGain: elevationGain,
                     totalDistance: totalDistance
                 };
 
-                 fetch('/save-route', {
-                         method: 'POST',
-                         headers: {
-                             'Content-Type': 'application/json',
-                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                         },
-                         body: JSON.stringify(routeData)
-                     })
-                     .then(response => response.json())
-                     .then(data => {
-                         if (data.status === 'success') {
-                             alert('Route saved successfully!');
-                         } else {
-                             alert('Failed to save route.');
-                         }
-                     });
+                fetch('/save-route', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify(routeData)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            alert('Route saved successfully!');
+                        } else {
+                            alert('Failed to save route.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while saving the route.');
+                    });
             }
 
             window.onload = initMap;

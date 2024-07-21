@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('routes', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->double('start')->nullable();
-            $table->double('end')->nullable();
+            $table->json('start')->nullable();
+            $table->json('end')->nullable();
             $table->json('waypoints');  // Waypoints as a JSON array
             $table->double('distance')->nullable();  // Total distance in kilometers
             $table->double('elevation_gain')->nullable();  // Total elevation gain in meters

@@ -71,23 +71,28 @@ class RouteController extends Controller
     }
     public function saveRoute(Request $request)
     {
+        error_log("Saveroute");
         try {
-            $data = $request->all();
-
             // Validate the incoming data
             $validated = $request->validate([
-                'start.lat' => 'required|numeric',
-                'start.lng' => 'required|numeric',
-                'end.lat' => 'required|numeric',
-                'end.lng' => 'required|numeric',
-                'waypoints' => 'array',
+                'start' => 'required|array',
+                'end' => 'required|array',
+                'waypoints' => 'required|array',
                 'elevationGain' => 'required|numeric',
-                'totalDistance' => 'required|numeric'
+                'totalDistance' => 'required|numeric',
+                'name' => 'required|string'
             ]);
-
-            // Save route logic (example: save to the database)
-            // Route::create($validated); // assuming you have a Route model and routes table
-
+            error_log("validated");
+            // Save the route data to the database
+            $route = new Route();
+            $route->name = $validated['name'];
+            $route->start = json_encode($validated['start']); // Convert array to JSON
+        $route->end = json_encode($validated['end']); // Convert array to JSON
+            $route->waypoints = json_encode($validated['waypoints']);
+            $route->distance = $validated['totalDistance'];
+            $route->elevation_gain = $validated['elevationGain'];
+            $route->save();
+    
             return response()->json(['status' => 'success']);
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
