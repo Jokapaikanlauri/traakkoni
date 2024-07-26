@@ -7,6 +7,7 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCq-kOTVIXT9u1_YXEsDbEBCIW3FQwYPZ4&libraries=places">
         </script>
         <style>
+            
             #map {
                 height: 90%;
                 width: 100%;
@@ -44,13 +45,17 @@
                 padding: 20px;
                 text-align: center;
             }
+            
         </style>
     </head>
 
     <body>
+
         <a href="{{ route('dashboard') }}">
-            <img class="block h-9 w-auto fill-current text-gray-800" src="/pictures/running.gif" />
+            <img class=" text-gray-800" src="/pictures/running.gif" />
         </a>
+
+
         <div id="controls">
             <input type="text" id="routeName" placeholder="Name your route" />
             <button id="button" onclick="calculateRoute()">Calculate Route</button>
