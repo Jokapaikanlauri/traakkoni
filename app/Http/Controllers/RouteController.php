@@ -35,16 +35,19 @@ class RouteController extends Controller
          $route->distance = $request->distance;
          $route->elevation_gain = $request->elevation_gain;
          $route->save();
-         error_log("store funktio");
          return to_route('home.index', $route)->with('message', 'Route was created');
      }
 
     /**
      * Display the specified resource.
      */
-    public function show(Route $route)
+    public function list()
     {
-        return ('hello world!');
+        return view('home.list');
+    }
+    public function show()
+    {
+        return view('home.show');
     }
 
     /**
@@ -70,32 +73,36 @@ class RouteController extends Controller
         //
     }
     public function saveRoute(Request $request)
-    {
-        error_log("Saveroute");
-        try {
-            // Validate the incoming data
-            $validated = $request->validate([
-                'start' => 'required|array',
-                'end' => 'required|array',
-                'waypoints' => 'required|array',
-                'elevationGain' => 'required|numeric',
-                'totalDistance' => 'required|numeric',
-                'name' => 'required|string'
-            ]);
-            error_log("validated");
-            // Save the route data to the database
-            $route = new Route();
-            $route->name = $validated['name'];
-            $route->start = json_encode($validated['start']); // Convert array to JSON
+{
+    try {
+        // Validate the incoming data
+        $validated = $request->validate([
+            'start' => 'required|array',
+            'end' => 'required|array',
+            'waypoints' => 'required|array',
+            'elevationGain' => 'required|numeric',
+            'totalDistance' => 'required|numeric',
+            'name' => 'required|string'
+        ]);
+
+        // Save the route data to the database
+        $route = new Route();
+        $route->user_id = auth()->id(); // Set the current user's ID
+        $route->name = $validated['name'];
+        $route->start = json_encode($validated['start']); // Convert array to JSON
         $route->end = json_encode($validated['end']); // Convert array to JSON
-            $route->waypoints = json_encode($validated['waypoints']);
-            $route->distance = $validated['totalDistance'];
-            $route->elevation_gain = $validated['elevationGain'];
-            $route->save();
-    
-            return response()->json(['status' => 'success']);
-        } catch (\Exception $e) {
-            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
-        }
+        $route->waypoints = json_encode($validated['waypoints']); // Convert array to JSON
+        $route->distance = $validated['totalDistance'];
+        $route->elevation_gain = $validated['elevationGain'];
+        $route->save();
+
+        return response()->json(['status' => 'success']);
+    } catch (\Exception $e) {
+        // Log the error
+        \Log::error('Error saving route: ' . $e->getMessage());
+
+        // Return a JSON response with the error
+        return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
     }
+}
 }

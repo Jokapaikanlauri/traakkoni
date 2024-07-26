@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('routes', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id'); // Add user_id column
             $table->string('name')->nullable();
             $table->json('start')->nullable();
             $table->json('end')->nullable();
@@ -22,6 +23,9 @@ return new class extends Migration
             $table->double('distance')->nullable();  // Total distance in kilometers
             $table->double('elevation_gain')->nullable();  // Total elevation gain in meters
             $table->timestamps();  // Created at and updated at timestamps
+
+            // Add foreign key constraint to ensure referential integrity
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

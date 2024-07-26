@@ -6,9 +6,9 @@
         <a href="{{route('home.create')}}" class="new-route-btn">
             Create a new route
         </a>
-        <a href="{{route('home.edit')}}" class="new-route-btn">
+        {{-- <a href="{{route('home.show')}}" class="new-route-btn">
             My routes
-        </a>
+        </a> --}}
         <a href="{{route('home.create')}}" class="new-route-btn">
             Create a new route
         </a>
