@@ -4,15 +4,11 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RouteController;
 
-
-use App\Http\Controllers\RoutePlannerController;
-
-
-
 Route::redirect("/","/home")->name("dashboard");
 Route::post('/save-route', [RouteController::class, 'saveRoute'])->name('saveRoute');
+Route::get('/myroutes', [RouteController::class, 'myroutes'])->name('home.myroutes');
+
 Route::middleware(["auth","verified"])->group(function () {
- 
 /*
 korvaa alla olevan koodin.
 Route::get('/note', [RouteController::class,'index'])->name('note.index');

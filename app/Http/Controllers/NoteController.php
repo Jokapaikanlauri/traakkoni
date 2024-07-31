@@ -7,27 +7,17 @@ use Illuminate\Http\Request;
 
 class RouteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        
-        
         return view('home.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('home.create') ;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $data=$request->validate(['route' => ['required','string']]);

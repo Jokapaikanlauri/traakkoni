@@ -1,6 +1,5 @@
 <php?>
     <html>
-
     <head>
         <title>Multi-Waypoint Route Planner</title>
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -54,7 +53,6 @@
         <a href="{{ route('dashboard') }}">
             <img class=" text-gray-800" src="/pictures/running.gif" />
         </a>
-
 
         <div id="controls">
             <input type="text" id="routeName" placeholder="Name your route" />

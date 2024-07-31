@@ -7,25 +7,30 @@ use Illuminate\Http\Request;
 
 class RouteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         return view('home.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('home.create') ;
     }
+    public function getAllRoutes()
+    {
+        $routes = Route::all();
+        return response()->json($routes);
+    }
+    public function myroutes()
+    {
+        $routes = Route::query()
+            ->where('user_id', request()->user()->id)
+            ->orderBy('created_at', 'desc')
+            ->paginate();
+        return view('home.myroutes', ['routes' => $routes]);
+    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
      public function store(Request $request)
      {
          $route = new Route;
@@ -41,13 +46,14 @@ class RouteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function list()
+    
+    public function show(Route $route)
     {
-        return view('home.list');
-    }
-    public function show()
-    {
-        return view('home.show');
+         if($route->id != request()->users()->id){
+             abort(403);
+             return view('home.show', ['route'=>$route]) ;
+             }
+
     }
 
     /**

@@ -20,7 +20,9 @@
                     <x-nav-link :href="route('home.create')" :active="request()->routeIs('dashboard')">
                         {{ __('Create') }}
                     </x-nav-link>
-                    
+                    <x-nav-link :href="route('home.myroutes')" :active="request()->routeIs('dashboard')">
+                        {{ __('My Routes') }}
+                    </x-nav-link>
                 </div>
             </div>
 
