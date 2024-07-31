@@ -56,11 +56,12 @@
                             directionsService = new google.maps.DirectionsService();
                             directionsRenderer = new google.maps.DirectionsRenderer();
                             directionsRenderer.setMap(map);
+                            console.log("rivi 59");
                             loadAllRoutes();
                         }
 
                         function loadAllRoutes() {
-                            // Fetch all saved routes data from your server
+                            console.log("rivi 64");
                             fetch('/myroutes')
                                 .then(response => response.json())
                                 .then(data => {
@@ -73,6 +74,7 @@
                                         }));
                                         displayRoute(start, end, waypoints);
                                     });
+                                    error.log(response.json);
                                 })
                                 .catch(error => console.error('Error fetching routes:', error));
                         }
