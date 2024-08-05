@@ -35,7 +35,9 @@
                                 <p>Distance: {{ $route->distance }} m</p>
                                 <p>Elevation Gain: {{ $route->elevation_gain }} m</p>
                                 <div id="map-{{ $route->id }}" class="route-map" style="height: 300px;"></div>
+                            </br>
                             </div>
+                            <button class="button">Delete route</button>
                         @endforeach
                     </div>
                     <script>
@@ -61,6 +63,7 @@
                                 origin: JSON.parse(start),
                                 destination: JSON.parse(end),
                                 waypoints: JSON.parse(waypoints).map(point => ({
+                                    
                                     location: point,
                                     stopover: true
                                 })),
@@ -71,6 +74,7 @@
                                 } else {
                                     console.error('Could not display route: ' + status);
                                 }
+                                
                             });
                         }
                     </script>

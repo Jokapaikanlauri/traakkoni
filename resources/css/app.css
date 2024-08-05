@@ -7,6 +7,50 @@
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
 }
+#map {
+  height: 90%;
+  width: 100%;
+}
+
+#controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  display: block;
+  margin: 0 auto 20px;
+  background-color: #fff;
+  padding: 10px 32px;
+  font-size: 26px;
+  outline: 0;
+  transition: all 0.3s;
+  cursor: pointer;
+
+  text-align: center;
+  text-decoration: none;
+  color: #1e1e1e
+}
+
+.controls:hover {
+  box-shadow: 0 5px 7px rgba(0, 0, 0, 0.1);
+}
+
+.controls:active {
+  position: relative;
+  top: 1px;
+}
+
+#info {
+  padding: 20px;
+  text-align: center;
+}
+.py-12{
+  background-color: #B4B4B8;
+  height: 100%;
+}
+.p-6{
+  background-color: #E3E1D9;
+}
 .note-container {
   display: flex;
   flex-direction: row;
@@ -39,6 +83,9 @@ color: #ffffff;
   flex-wrap: wrap;
   margin: 0 auto;
 }
+.route {
+  padding: 1.5em;
+}
 .note {
   background-color: #f0c806;
   border-radius: 8px;
@@ -53,7 +100,7 @@ color: #ffffff;
 
 .note .note-body {
   outline: 0;
-  font-family: 'Caveat', cursive;
+
   font-size: 24px;
   padding: 10px 16px 16px;
 }
