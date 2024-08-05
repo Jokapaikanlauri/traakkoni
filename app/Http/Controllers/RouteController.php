@@ -10,18 +10,21 @@ class RouteController extends Controller
 
     public function index()
     {
-        return view('home.index');
+        $routes = Route::query()
+            ->orderBy('created_at', 'desc')
+            ->paginate();
+        return view('home.index', ['routes' => $routes]);
     }
 
     public function create()
     {
         return view('home.create') ;
     }
-    public function getAllRoutes()
-    {
-        $routes = Route::all();
-        return response()->json($routes);
-    }
+    // public function getAllRoutes()
+    // {
+    //     $routes = Route::all();
+    //     return response()->json($routes);
+    // }
     public function myroutes()
     {
         $routes = Route::query()
@@ -49,11 +52,11 @@ class RouteController extends Controller
     
     public function show(Route $route)
     {
-         if($route->id != request()->users()->id){
-             abort(403);
-             return view('home.show', ['route'=>$route]) ;
-             }
-
+        //  if($route->id != request()->users()->id){
+        //      abort(403);
+             
+        //      }
+             return view('home.show', ['route'=>$route]);
     }
 
     /**
