@@ -15,16 +15,16 @@ return new class extends Migration
     {
         Schema::create('routes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id'); // Add user_id column
+            $table->unsignedBigInteger('user_id');
             $table->string('name')->nullable();
             $table->json('start')->nullable();
             $table->json('end')->nullable();
-            $table->json('waypoints');  // Waypoints as a JSON array
-            $table->double('distance')->nullable();  // Total distance in kilometers
-            $table->double('elevation_gain')->nullable();  // Total elevation gain in meters
-            $table->timestamps();  // Created at and updated at timestamps
-
-            // Add foreign key constraint to ensure referential integrity
+            $table->json('waypoints'); 
+            $table->double('distance')->nullable();  
+            $table->double('elevation_gain')->nullable();  
+            $table->timestamps();  
+            $table->integer('likes')->default(0);  
+            
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

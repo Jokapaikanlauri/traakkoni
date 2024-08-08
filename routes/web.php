@@ -20,6 +20,8 @@ Route::put('/note/{id}', [RouteController::class,'update'])->name('note.update')
 Route::delete('/note/{id}', [RouteController::class,'delete'])->name('note.destroy');
 */
 Route::resource('home', RouteController::class);
+Route::post('/routes/{route}/like', [RouteController::class, 'likeRoute']);
+
 });
 
 Route::middleware('auth')->group(function () {

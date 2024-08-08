@@ -15,16 +15,17 @@ class RouteController extends Controller
             ->paginate();
         return view('home.index', ['routes' => $routes]);
     }
-
+    
+    public function likeRoute(Request $request, Route $route) {
+        $route->increment('likes');
+        return response()->json(['status' => 'success', 'likes' => $route->likes]);
+    }
+    
     public function create()
     {
         return view('home.create') ;
     }
-    // public function getAllRoutes()
-    // {
-    //     $routes = Route::all();
-    //     return response()->json($routes);
-    // }
+
     public function myroutes()
     {
         $routes = Route::query()
@@ -59,17 +60,6 @@ class RouteController extends Controller
              return view('home.show', ['route'=>$route]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Route $route)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Route $route)
     {
         //

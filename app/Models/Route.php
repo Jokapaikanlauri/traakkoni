@@ -17,6 +17,7 @@ class Route extends Model
         'waypoints',
         'distance',
         'elevation_gain',
+        'likes',
     ];
 
     protected $casts = [
