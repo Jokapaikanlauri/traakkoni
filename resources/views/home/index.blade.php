@@ -39,7 +39,12 @@
                             font-size: 16px;
                         }
 
-                        .like-button:hover {
+                        .like-button.disabled {
+                            background-color: #cccccc;
+                            cursor: not-allowed;
+                        }
+
+                        .like-button:hover:not(.disabled) {
                             background-color: #1c7ccc;
                         }
                     </style>
@@ -51,7 +56,12 @@
                                 <p>Distance: {{ round($route->distance) }} meters</p>
                                 <p>Elevation Gain: {{ round($route->elevation_gain) }} meters</p>
                                 <p>Likes: <span id="like-count-{{ $route->id }}">{{ $route->likes }}</span></p>
-                                <button class="like-button" onclick="likeRoute({{ $route->id }})">Like</button>
+                                <button 
+                                    class="like-button {{ $route->isLikedByUser(auth()->id()) ? 'disabled' : '' }}" 
+                                    onclick="likeRoute({{ $route->id }})" 
+                                    {{ $route->isLikedByUser(auth()->id()) ? 'disabled' : '' }}>
+                                    {{ $route->isLikedByUser(auth()->id()) ? 'Liked' : 'Like' }}
+                                </button>
                                 <div id="map-{{ $route->id }}" class="route-map" style="height: 300px;"></div>
                             </div>
                         @endforeach
@@ -103,6 +113,9 @@
                             .then(data => {
                                 if (data.status === 'success') {
                                     document.getElementById('like-count-' + routeId).textContent = data.likes;
+                                    document.querySelector('.like-button[onclick="likeRoute(' + routeId + ')"]').classList.add('disabled');
+                                    document.querySelector('.like-button[onclick="likeRoute(' + routeId + ')"]').textContent = 'Liked';
+                                    document.querySelector('.like-button[onclick="likeRoute(' + routeId + ')"]').disabled = true;
                                 } else {
                                     alert('Failed to like the route.');
                                 }
