@@ -63,6 +63,21 @@
                                     {{ $route->isLikedByUser(auth()->id()) ? 'Liked' : 'Like' }}
                                 </button>
                                 <div id="map-{{ $route->id }}" class="route-map" style="height: 300px;"></div>
+                                
+                                <h3>Comments</h3>
+                                @foreach ($route->comments as $comment)
+                                    <div class="comment">
+                                        <strong>{{ $comment->user->name }}:</strong>
+                                        <p>{{ $comment->content }}</p>
+                                        <small>{{ $comment->created_at->diffForHumans() }}</small>
+                                    </div>
+                                @endforeach
+
+                                <form action="{{ route('route.comment', $route) }}" method="POST">
+                                    @csrf
+                                    <textarea name="content" rows="3" class="w-full border rounded-md" placeholder="Write a comment..." required></textarea>
+                                    <button type="submit" class="like-button mt-2">Post Comment</button>
+                                </form>
                             </div>
                         @endforeach
                     </div>

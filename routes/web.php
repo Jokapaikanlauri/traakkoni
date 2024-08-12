@@ -21,6 +21,7 @@ Route::delete('/note/{id}', [RouteController::class,'delete'])->name('note.destr
 */
 Route::resource('home', RouteController::class);
 Route::post('/routes/{route}/like', [RouteController::class, 'likeRoute']);
+Route::post('/routes/{route}/comment', [RouteController::class, 'addComment'])->middleware('auth')->name('route.comment');
 
 });
 

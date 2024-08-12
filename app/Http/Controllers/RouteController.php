@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Route;
 use Illuminate\Http\Request;
-
+use App\Models\Comment;
 class RouteController extends Controller
 {
 
@@ -79,6 +79,16 @@ class RouteController extends Controller
     public function destroy(Route $route)
     {
         //
+    }
+    public function addComment(Request $request, Route $route) {
+        $request->validate(['content' => 'required|string']);
+        $comment = new Comment([
+            'user_id' => auth()->id(),
+            'route_id' => $route->id,
+            'content' => $request->content,
+        ]);
+        $route->comments()->save($comment);
+        return back()->with('message', 'Comment added successfully');
     }
     public function saveRoute(Request $request)
     {
