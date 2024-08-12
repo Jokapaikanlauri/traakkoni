@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
     {
 
         User::factory()->create([
-            'id'=>100,
+            'id'=>1,
             'name' => 'Jasmin',
             'email' => 'traakkoni@example.com',
             'password'=> bcrypt('phponihanaa123'),
@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
 
         Route::factory()->create([
             'user_id' =>1,
-            'name' => 'Sample Route',
+            'name' => 'Reippailua helsingissä',
             'start' => json_encode(['lat' => 60.192059, 'lng' => 24.945831]),
             'end' => json_encode(['lat' => 60.229243, 'lng' => 24.962997]),
             'waypoints' => json_encode([['lat' => 60.200000, 'lng' => 24.950000]]),
