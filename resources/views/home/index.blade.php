@@ -6,62 +6,7 @@
                     <meta name="csrf-token" content="{{ csrf_token() }}">
                     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCq-kOTVIXT9u1_YXEsDbEBCIW3FQwYPZ4&libraries=places">
                     </script>
-                    <style>
-                        #map {
-                            height: 500px;
-                            width: 100%;
-                        }
 
-                        .controls:hover {
-                            box-shadow: 0 5px 7px rgba(0, 0, 0, 0.1);
-                        }
-
-                        .controls:active {
-                            position: relative;
-                            top: 1px;
-                        }
-
-                        #info {
-                            padding: 20px;
-                            text-align: center;
-                        }
-
-                        .title {
-                            font-weight: bolder;
-                            font-size: larger;
-                        }
-
-                        .like-button {
-                            background-color: #1e90ff;
-                            color: white;
-                            border: none;
-                            padding: 10px;
-                            
-                            font-size: 16px;
-                        }
-
-                        .like-button.disabled {
-                            background-color: #cccccc;
-                            cursor: not-allowed;
-                        }
-
-                        .btn-delete {
-                            background-color: red;
-                            color: white;
-                            padding: 5px 10px;
-                            border: none;
-                            border-radius: 3px;
-                            
-                        }
-
-                        .btn-delete:hover {
-                            background-color: darkred;
-                        }
-
-                        .like-button:hover:not(.disabled) {
-                            background-color: #1c7ccc;
-                        }
-                    </style>
                     <div class="container">
                         <h1 class="title">All routes</h1>
                         @foreach ($routes as $route)
@@ -75,17 +20,7 @@
                                 {{ $route->isLikedByUser(auth()->id()) ? 'disabled' : '' }}>
                                 {{ $route->isLikedByUser(auth()->id()) ? 'Liked' : 'Like' }}
                             </button>
-                            <!-- Only show the delete button if the route belongs to the logged-in user -->
-                            @if ($route->user_id === auth()->id())
-                                <form action="{{ route('routes.destroy', $route) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" onclick="return confirm('Are you sure you want to delete this route?')" class="btn-delete">
-                                        Delete route
-                                    </button>
-                                </form>
-                            @endif
-                    
+
                             <div id="map-{{ $route->id }}" class="route-map" style="height: 300px;"></div>
                         </div>
                                 <h3>Comments</h3>
@@ -117,14 +52,7 @@
                                 <textarea name="content" rows="3" class="w-full border rounded-md" placeholder="Write a comment..." required></textarea>
                                 <button type="submit" class="like-button mt-2">Post Comment</button>
                             </form>
-                            @if ($route->user_id === auth()->id())
-                                <form action="{{ route('routes.destroy', $route) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        onclick="return confirm('Are you sure you want to delete this route?')">Delete</button>
-                                </form>
-                            @endif
+                          
                     </div>
                     @endforeach
                 </div>

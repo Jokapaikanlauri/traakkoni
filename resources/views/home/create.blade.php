@@ -2,8 +2,8 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
+            <div class= overflow-hidden >
+                <div class="p-6 sm:px-20 border-b border-gray-200">
                     <div id="controls">
                         <input type="text" id="routeName" placeholder="Name your route" />
                         <button id="button" onclick="calculateRoute()">Calculate Route</button>
@@ -57,6 +57,7 @@
                 stopover: true
             });
             h++;
+            
         }
 
         function calculateRoute() {

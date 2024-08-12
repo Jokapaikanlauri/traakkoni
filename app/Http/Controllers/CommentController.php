@@ -7,11 +7,9 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    // Other methods...
 
     public function destroy(Comment $comment)
     {
-        // Ensure the user owns the comment
         if ($comment->user_id !== auth()->id()) {
             abort(403, 'Unauthorized action.');
         }

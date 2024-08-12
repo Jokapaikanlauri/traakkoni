@@ -1,10 +1,14 @@
 Käynnistämiseen tarvittavat ohjeet:
 composer install
 npm install
-npm run dev
+(jos ei toimi ja valittaa ....npm.ps1 is not digitally signed niin)
+    Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
 (avaa uusi konsoli)
 php artisan migrate
 php artisan db:seed
+KOPIOI .env.example uuteen tiedostoon .env
+npm run dev
 php artisan serve
 
 Käyttäjätunnukset:
@@ -22,4 +26,3 @@ Kotisivustolla pääset kirjautuneena käyttäjänä selaamaan, tykkäämään j
 Reitin suunnittelu:
 
 Reitin suunnitteleminen on tehty google maps apin avulla, jota on hieman muokattu omiin tarpeisiin sopivammaksi. Reittiin saa lisättyä välietappeja klikkaamalla karttaa, jonka jälkeen voidaan tarkistaa matkan pituus ja korkeusvaihtelut. Reitin tallentaminen onnistuu Save route painikkeesta.
-

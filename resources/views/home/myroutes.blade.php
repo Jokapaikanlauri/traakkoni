@@ -28,7 +28,7 @@
                         }
                     </style>
                     <div class="container">
-                        <h1>My Routes</h1>
+                        <h1 class="title">My Routes</h1>
                         @foreach ($routes as $route)
                             <div class="route">
                                 <h2>{{ $route->name }}</h2>
@@ -37,7 +37,7 @@
                                 <div id="map-{{ $route->id }}" class="route-map" style="height: 300px;"></div>
                             </br>
                             </div>
-                            <button class="button">Delete route</button>
+                            <button class="btn-delete">Delete route</button>
                         @endforeach
                     </div>
                     <script>
