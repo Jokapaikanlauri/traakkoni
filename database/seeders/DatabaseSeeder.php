@@ -12,17 +12,27 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      */
+    
     public function run(): void
     {
 
         User::factory()->create([
-            'id'=>1,
+            'id'=>100,
             'name' => 'Test User',
             'email' => 'test@example.com',
             'password'=> bcrypt('pass123.'),
 
         ]);
 
-        
+        Route::factory()->create([
+            'user_id' =>1,
+            'name' => 'Sample Route',
+            'start' => json_encode(['lat' => 60.192059, 'lng' => 24.945831]),
+            'end' => json_encode(['lat' => 60.229243, 'lng' => 24.962997]),
+            'waypoints' => json_encode([['lat' => 60.200000, 'lng' => 24.950000]]),
+            'distance' => 10.0,
+            'elevation_gain' => 100.0,
+        ]);
     }
+    
 }

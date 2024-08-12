@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RouteController;
+use App\Http\Controllers\CommentController;
 
 Route::redirect("/","/home")->name("dashboard");
 Route::post('/save-route', [RouteController::class, 'saveRoute'])->name('saveRoute');
@@ -22,7 +23,8 @@ Route::delete('/note/{id}', [RouteController::class,'delete'])->name('note.destr
 Route::resource('home', RouteController::class);
 Route::post('/routes/{route}/like', [RouteController::class, 'likeRoute']);
 Route::post('/routes/{route}/comment', [RouteController::class, 'addComment'])->middleware('auth')->name('route.comment');
-
+Route::resource('routes', RouteController::class)->except(['edit', 'update']);
+Route::resource('comments', CommentController::class)->only(['store', 'destroy']);
 });
 
 Route::middleware('auth')->group(function () {

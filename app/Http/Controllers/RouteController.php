@@ -78,7 +78,14 @@ class RouteController extends Controller
      */
     public function destroy(Route $route)
     {
-        //
+        // Ensure the user owns the route
+        if ($route->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $route->delete();
+
+        return redirect()->route('home.myroutes')->with('message', 'Route deleted successfully.');
     }
     public function addComment(Request $request, Route $route) {
         $request->validate(['content' => 'required|string']);

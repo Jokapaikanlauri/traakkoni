@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('route_id')->constrained()->onDelete('cascade');
             $table->timestamps();
-
+            
             // Ensure a user can only like a route once
             $table->unique(['user_id', 'route_id']);
         });
