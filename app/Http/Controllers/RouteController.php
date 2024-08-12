@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Route;
 use Illuminate\Http\Request;
 use App\Models\Comment;
+
 class RouteController extends Controller
 {
+    //Tässä tiedostossa on tärkeimmät yleisreititykset
 
     public function index()
     {
@@ -56,8 +58,6 @@ class RouteController extends Controller
         return to_route('home.index', $route)->with('message', 'Route was created');
     }
 
-
-
     public function show(Route $route)
     {
           if($route->id != request()->users()->id){
@@ -101,7 +101,6 @@ class RouteController extends Controller
                 'totalDistance' => 'required|numeric',
                 'name' => 'required|string'
             ]);
-
 
             $route = new Route();
             $route->user_id = auth()->id();

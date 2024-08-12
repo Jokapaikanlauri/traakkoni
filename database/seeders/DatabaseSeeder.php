@@ -4,15 +4,12 @@ namespace Database\Seeders;
 
 use App\Models\Route;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
-    
+    //Tässä luodaan valmiiksi hieman dataa ja käyttäjätunnus jotta ohjelmaa on mukavampi lähteä käyttämään.
     public function run(): void
     {
 
