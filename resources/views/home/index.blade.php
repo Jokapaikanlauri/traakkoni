@@ -4,11 +4,11 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <meta name="csrf-token" content="{{ csrf_token() }}">
-                    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCq-kOTVIXT9u1_YXEsDbEBCIW3FQwYPZ4&libraries=places">
+                    <script src="https://maps.googleapis.com/maps/api/js?key=">
                     </script>
 
                     <div class="container">
-                        <h1 class="title">All routes</h1>
+                        <h1 class="title">Hihhulihei</h1>
                         @foreach ($routes as $route)
                         <div class="route">
                             <h2>{{ $route->name }}</h2>

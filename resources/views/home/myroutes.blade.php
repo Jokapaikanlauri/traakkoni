@@ -5,7 +5,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <meta name="csrf-token" content="{{ csrf_token() }}">
-                    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCq-kOTVIXT9u1_YXEsDbEBCIW3FQwYPZ4&libraries=places">
+                    <script src="https://maps.googleapis.com/maps/api/js?key=">
                     </script>
                     <style>
                         #map {

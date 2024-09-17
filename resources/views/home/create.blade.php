@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCq-kOTVIXT9u1_YXEsDbEBCIW3FQwYPZ4&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key="></script>
     <script>
         let map;
         let directionsService;
@@ -47,6 +47,8 @@
             if (h == 0) {
                 start = location;
             }
+            error_log(location);
+            
             end = location;
             const marker = new google.maps.Marker({
                 position: location,
