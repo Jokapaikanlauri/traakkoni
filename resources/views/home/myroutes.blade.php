@@ -5,7 +5,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <meta name="csrf-token" content="{{ csrf_token() }}">
-                    <script src="https://maps.googleapis.com/maps/api/js?key=">
+                    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7C6NtwFHaRzcGLqiqTw34NhSVBoKIHdU">
                     </script>
                     <style>
                         #map {
@@ -37,7 +37,11 @@
                                 <div id="map-{{ $route->id }}" class="route-map" style="height: 300px;"></div>
                             </br>
                             </div>
-                            <button class="btn-delete">Delete route</button>
+                            <form action="{{ route('routes.destroy', $route) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this route?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn-delete">Delete Route</button>
+                            </form>
                         @endforeach
                     </div>
                     <script>

@@ -2,7 +2,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class= overflow-hidden >
+            <div class="overflow-hidden">
                 <div class="p-6 sm:px-20 border-b border-gray-200">
                     <div id="controls">
                         <input type="text" id="routeName" placeholder="Name your route" />
@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key="></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7C6NtwFHaRzcGLqiqTw34NhSVBoKIHdU"></script>
     <script>
         let map;
         let directionsService;
@@ -46,10 +46,10 @@
         function addWaypoint(location) {
             if (h == 0) {
                 start = location;
+            } else {
+                end = location;
             }
-            error_log(location);
             
-            end = location;
             const marker = new google.maps.Marker({
                 position: location,
                 map: map
@@ -59,7 +59,6 @@
                 stopover: true
             });
             h++;
-            
         }
 
         function calculateRoute() {

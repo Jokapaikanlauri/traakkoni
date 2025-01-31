@@ -4,16 +4,16 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <meta name="csrf-token" content="{{ csrf_token() }}">
-                    <script src="https://maps.googleapis.com/maps/api/js?key=">
+                    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7C6NtwFHaRzcGLqiqTw34NhSVBoKIHdU">
                     </script>
 
                     <div class="container">
                         <h1 class="title">Hihhulihei</h1>
                         @foreach ($routes as $route)
-                        <div class="route">
+                        <div class="route" style="background-color: #E3E1D9; padding: 20px; margin-bottom: 20px; border-radius: 8px;">
                             <h2>{{ $route->name }}</h2>
-                            <p>Distance: {{ $route->distance }} meters</p>
-                            <p>Elevation Gain: {{ $route->elevation_gain }} meters</p>
+                            <p>Distance: {{ number_format($route->distance / 1000, 2) }} km</p>
+                            <p>Elevation Gain: {{ number_format($route->elevation_gain, 0) }} meters</p>
                             <p>Likes: <span id="like-count-{{ $route->id }}">{{ $route->likes }}</span></p>
                             <button class="like-button {{ $route->isLikedByUser(auth()->id()) ? 'disabled' : '' }}"
                                 onclick="likeRoute({{ $route->id }})"
@@ -22,39 +22,34 @@
                             </button>
 
                             <div id="map-{{ $route->id }}" class="route-map" style="height: 300px;"></div>
-                        </div>
-                                <h3>Comments</h3>
-                                @foreach ($route->comments as $comment)
-                                    <div class="comment">
-                                        <p>{{ $comment->content }}</p>
+                            <h3>Comments</h3>
+                            @foreach ($route->comments as $comment)
+                                <div class="comment">
+                                    <p>{{ $comment->content }}</p>
 
-                                        <!-- Only show the delete button if the comment belongs to the logged-in user -->
-                                        @if ($comment->user_id === auth()->id())
-                                            <form action="{{ route('comments.destroy', $comment) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                    onclick="return confirm('Are you sure you want to delete this comment?')"
-                                                    class="btn-delete">
-                                                    Delete comment
-                                                </button>
-                                            </form>
-                                        @endif
-                                    </div>
-                                @endforeach
-
-                            </div>
-
-
+                                    <!-- Only show the delete button if the comment belongs to the logged-in user -->
+                                    @if ($comment->user_id === auth()->id())
+                                        <form action="{{ route('comments.destroy', $comment) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                onclick="return confirm('Are you sure you want to delete this comment?')"
+                                                class="btn-delete">
+                                                Delete comment
+                                            </button>
+                                        </form>
+                                    @endif
+                                </div>
+                            @endforeach
 
                             <form action="{{ route('route.comment', $route) }}" method="POST">
                                 @csrf
                                 <textarea name="content" rows="3" class="w-full border rounded-md" placeholder="Write a comment..." required></textarea>
                                 <button type="submit" class="like-button mt-2">Post Comment</button>
                             </form>
-                          
+                        </div>
+                        @endforeach
                     </div>
-                    @endforeach
                 </div>
                 <script>
                     document.addEventListener("DOMContentLoaded", function() {

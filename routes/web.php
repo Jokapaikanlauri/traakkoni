@@ -12,11 +12,13 @@ Route::post('/save-route', [RouteController::class, 'saveRoute'])->name('saveRou
 Route::get('/myroutes', [RouteController::class, 'myroutes'])->name('home.myroutes');
 
 Route::middleware(["auth","verified"])->group(function () {
-Route::resource('home', RouteController::class);
-Route::post('/routes/{route}/like', [RouteController::class, 'likeRoute']);
-Route::post('/routes/{route}/comment', [RouteController::class, 'addComment'])->middleware('auth')->name('route.comment');
-Route::resource('routes', RouteController::class)->except(['edit', 'update']);
-Route::resource('comments', CommentController::class)->only(['store', 'destroy']);
+    Route::resource('home', RouteController::class);
+    Route::post('/routes/{route}/like', [RouteController::class, 'likeRoute']);
+    Route::post('/routes/{route}/comment', [RouteController::class, 'addComment'])->middleware('auth')->name('route.comment');
+    Route::resource('routes', RouteController::class)->except(['edit', 'update']);
+    Route::resource('comments', CommentController::class)->only(['store', 'destroy']);
+    Route::delete('/routes/{route}', [RouteController::class, 'destroy'])->name('routes.destroy');
+
 });
 
 Route::middleware('auth')->group(function () {
